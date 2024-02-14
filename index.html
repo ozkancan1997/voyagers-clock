@@ -11,6 +11,7 @@
             border-radius: 100%;
             position: relative;
             font-size: 25px;
+			display: inline-block;
         }
 
         .time{
@@ -82,7 +83,45 @@
             font-family: 'Courier New', monospace;
             font-weight: 100;
         }
+		
+		#heart{
+		  rotate: 225deg;
+		  transform: translateY(130px);
+		}
 
+		svg path {
+		  stroke-dasharray: 1;
+		  stroke-dashoffset: 1;
+		  animation: draw 5s linear alternate forwards;
+		}
+
+		text{
+		  rotate: 135deg;
+		}
+
+		.fill{
+		  animation: gored 2s linear forwards;
+		  stroke-dashoffset: 0;
+		  stroke-dasharray: none;
+		}
+
+		@keyframes draw {
+		  from {
+			stroke-dashoffset: 1;
+		  }
+		  to {
+			stroke-dashoffset: 0;
+		  }
+		}
+
+		@keyframes gored {
+		  0% {
+			fill: white; /* Starting color */
+		  }
+		  100% {
+			fill: red; /* Ending color */
+		  }
+		}
         
 
     </style>
@@ -99,6 +138,18 @@
         <div id="center"></div>
         <div id="brand">Voyager's Clock</div>
     </div>
+	<svg id="heart" viewBox="20 -10 315 342" height="472.5" width="513" fill="none">
+	  <path stroke="red"
+	  pathLength="1"
+	  stroke-width="7.5"
+	  d="M0 200 v-200 h200 
+		a100,100 90 0,1 0,200
+		a100,100 90 0,1 -200,0
+		z"
+	  >
+	  </path>
+	  <text id="daisy" x="-103" y="-135" font-size="150" fill="blue">🌼</text>
+	</svg>
 </body>
     <script>
         const frame = document.getElementById("frame");
@@ -134,5 +185,10 @@
             console.log((360*(min*60+sec)/3600)+"deg")
             console.log((360*(hour*3600+min*60+sec)/43200)+"deg");
         }, 1000)
+		
+		const heart = document.getElementById("heart");
+		heart.addEventListener("animationend", e=>{
+			e.target.classList.add("fill");
+		})
     </script>
 </html>
